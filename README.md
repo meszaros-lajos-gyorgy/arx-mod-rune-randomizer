@@ -4,6 +4,9 @@ A simple Arx Fatalis mod for randomizing runes that you pick up
 
 ![screenshot](screenshot.png?raw=true "screenshot")
 
+**Compatible with
+[Arx Libertatis Mod Manager](https://github.com/fredlllll/ArxLibertatisModManager)**
+
 ## Requirements
 
 Latest stable version of Arx Libertatis is recommended.
