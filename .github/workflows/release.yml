@@ -28,6 +28,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: release.zip
-          asset_name: ${{ $GITHUB_ACTION_REPOSITORY}}-${{ $GITHUB_REF_NAME }}.zip
+          asset_name: ${{ GITHUB_ACTION_REPOSITORY}}-${{ GITHUB_REF_NAME }}.zip
           tag: ${{ github.ref }}
           overwrite: true
