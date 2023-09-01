@@ -31,6 +31,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: release.zip
-          asset_name: ${{ format('{0}-{1}.zip', env.REPO_NAME, GITHUB_REF_NAME) }}
+          asset_name: ${{env.REPO_NAME}}-$tag.zip
           tag: ${{ github.ref }}
           overwrite: true
