@@ -8,6 +8,9 @@ on:
     tags:
       - "*"
 
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+
 permissions:
   contents: write
 
@@ -28,6 +31,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: release.zip
-          asset_name: ${{ format('{0}-{1}.zip', $GITHUB_ACTION_REPOSITORY, $GITHUB_REF_NAME) }}
+          asset_name: ${{ format('{0}-{1}.zip', $REPO_NAME, $tag) }}
           tag: ${{ github.ref }}
           overwrite: true
