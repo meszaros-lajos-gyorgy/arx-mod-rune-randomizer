@@ -25,12 +25,11 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: src/
-          recursive: false
           dest: release.zip
       - name: Upload zip to release
         uses: svenstaro/upload-release-action@v2
         with:
           file: release.zip
-          asset_name: ${{env.REPO_NAME}}-$tag.zip
+          asset_name: ${{ env.REPO_NAME }}-$tag.zip
           tag: ${{ github.ref }}
           overwrite: true
