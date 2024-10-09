@@ -9,8 +9,11 @@ ON INIT {
 }
 
 ON INITEND {
+  // ------------------------- start mod part 1 -------------------------
+
   GOSUB MOD_RR_INIT
 
+  // step 3: use up all the mod_rr_rune_* variables, then subsequent runes can be completely random
   IF (#MOD_RR_MANDATORY_RUNES_REMAINING >= 0) {
     SET £rune_name $MOD_RR_RUNE_~#MOD_RR_MANDATORY_RUNES_REMAINING~
     DEC #MOD_RR_MANDATORY_RUNES_REMAINING 1
@@ -38,6 +41,8 @@ ON INITEND {
     IF (§random_value == 18) SET £rune_name "vitae"
     IF (§random_value == 19) SET £rune_name "yok"
   }
+
+  // ------------------------- end of mod part 1 -------------------------
   
   SETNAME [system_~£rune_name~] 
   TWEAK ICON rune_~£rune_name~[icon]
@@ -45,6 +50,12 @@ ON INITEND {
   ACCEPT
 }
 
+// ------------------------- start mod part 2 -------------------------
+
+// removal of unsorted_rune_<random_idx>:
+// while random_idx < remaining_runes do:
+//   unsorted_rune_<random_idx> = unsorted_rune_<random_idx + 1>
+//   random_idx++
 >>WHILE_RANDOM_IDX_NOT_EQ_REMAINING_RUNES {
   IF (§RANDOM_IDX >= §REMAINING_RUNES) {
     RETURN
@@ -61,17 +72,32 @@ ON INITEND {
   RETURN
 }
 
+// step 2: counting down from 20 to 0 using remaining_runes as the index:
+//   pick a random unsorted_rune_* variable and assign it to mod_rr_rune_<remaining_runes>
 >>DO_WHILE_REMAINING_RUNES_GTE_0 {
+  // a random integer is picked between 0 and remaining_runes (random(20) = [0..19], random(0) = 0)
+  // the picked random integer is stored as random_idx
+  //
+  // avoiding ^rnd_0, as prior to Arx Libertatis 1.3 it causes an infinite loop and the game just hangs
+  // in AL 1.3 it returns 0
   IF (§REMAINING_RUNES == 0) {
     SET §RANDOM_IDX 0
   } ELSE {
     SET §RANDOM_IDX ^rnd_~§REMAINING_RUNES~
   }
 
+  // a new variable called mod_rr_rune_<remaining_runes> gets the value of unsorted_rune_<random_idx>
   SET $MOD_RR_RUNE_~§REMAINING_RUNES~ £UNSORTED_RUNE_~§RANDOM_IDX~
+
   DEC §REMAINING_RUNES 1
-  
+
+  // remove unsorted_rune_<random_idx> so it cannot be picked again
   GOSUB WHILE_RANDOM_IDX_NOT_EQ_REMAINING_RUNES
+
+  // recursion
+  IF (§REMAINING_RUNES >= 0) {
+    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
+  }
 
   RETURN
 }
@@ -84,7 +110,8 @@ ON INITEND {
   SET #MOD_RR_INITED 1
   
   SET #MOD_RR_MANDATORY_RUNES_REMAINING 19
-  
+
+  // step 1: generate 20 variables, each holding the name of a rune
   SET £UNSORTED_RUNE_0 "aam"
   SET £UNSORTED_RUNE_1 "cetrius"
   SET £UNSORTED_RUNE_2 "comunicatum"
@@ -105,76 +132,15 @@ ON INITEND {
   SET £UNSORTED_RUNE_17 "vista"
   SET £UNSORTED_RUNE_18 "vitae"
   SET £UNSORTED_RUNE_19 "yok"
-  
+
   SET §REMAINING_RUNES 20
 
-  // arx 1.2 doesn't like recursion in the do_while... label
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
-  IF (§REMAINING_RUNES >= 0) {
-    GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
-  }
+  GOSUB DO_WHILE_REMAINING_RUNES_GTE_0
 
   RETURN
 }
+
+// ------------------------- end of mod part 2 -------------------------
 
 ON INVENTORYUSE {
   PLAY "system2"
