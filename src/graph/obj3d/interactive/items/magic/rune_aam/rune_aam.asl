@@ -103,6 +103,7 @@ ON INITEND {
 }
 
 >>MOD_RR_INIT {
+  // make sure this code block only runs once
   IF (#MOD_RR_INITED == 1) {
     RETURN
   }
