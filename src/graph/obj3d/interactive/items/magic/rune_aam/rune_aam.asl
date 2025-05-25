@@ -13,14 +13,17 @@ ON INITEND {
 
   SET §EXCLUDE_ME 0
 
-  // "mega" rune on level 15 that is only visible in the demo version
-  IF (^ME == "rune_aam_0003") {
-    SET §EXCLUDE_ME 1
-  }
+  // exclude if not in demo mode
+  IF (^DEMO == 0) {
+    // "mega" rune on level 15 that is only visible in the demo version
+    IF (^ME == "rune_aam_0003") {
+      SET §EXCLUDE_ME 1
+    }
 
-  // "vista" rune on level 15 that is only visible in the demo version
-  IF (^ME == "rune_aam_0004") {
-    SET §EXCLUDE_ME 1
+    // "vista" rune on level 15 that is only visible in the demo version
+    IF (^ME == "rune_aam_0004") {
+      SET §EXCLUDE_ME 1
+    }
   }
 
   IF (§EXCLUDE_ME == 0) {
