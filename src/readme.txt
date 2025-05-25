@@ -4,7 +4,7 @@
 
 A simple Arx Fatalis mod for randomizing runes that you pick up
 
-You have to start a new quest to have the runes randomized for you, it will not work on existing save files!
+You have to start a new quest to have the runes randomized for you, it will NOT work on existing save files!
 
 --------------
  Installation

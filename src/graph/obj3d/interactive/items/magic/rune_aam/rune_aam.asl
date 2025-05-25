@@ -11,35 +11,49 @@ ON INIT {
 ON INITEND {
   // ------------------------- start mod part 1 -------------------------
 
-  GOSUB MOD_RR_INIT
+  SET §EXCLUDE_ME 0
 
-  // step 3: use up all the mod_rr_rune_* variables, then subsequent runes can be completely random
-  IF (#MOD_RR_MANDATORY_RUNES_REMAINING >= 0) {
-    SET £rune_name $MOD_RR_RUNE_~#MOD_RR_MANDATORY_RUNES_REMAINING~
-    DEC #MOD_RR_MANDATORY_RUNES_REMAINING 1
-  } ELSE {
-    SET §random_value ^rnd_20
-    
-    IF (§random_value ==  0) SET £rune_name "aam"
-    IF (§random_value ==  1) SET £rune_name "cetrius"
-    IF (§random_value ==  2) SET £rune_name "comunicatum"
-    IF (§random_value ==  3) SET £rune_name "cosum"
-    IF (§random_value ==  4) SET £rune_name "folgora"
-    IF (§random_value ==  5) SET £rune_name "fridd"
-    IF (§random_value ==  6) SET £rune_name "kaom"
-    IF (§random_value ==  7) SET £rune_name "mega"
-    IF (§random_value ==  8) SET £rune_name "morte"
-    IF (§random_value ==  9) SET £rune_name "movis"
-    IF (§random_value == 10) SET £rune_name "nhi"
-    IF (§random_value == 11) SET £rune_name "rhaa"
-    IF (§random_value == 12) SET £rune_name "spacium"
-    IF (§random_value == 13) SET £rune_name "stregum"
-    IF (§random_value == 14) SET £rune_name "taar"
-    IF (§random_value == 15) SET £rune_name "tempus"
-    IF (§random_value == 16) SET £rune_name "tera"
-    IF (§random_value == 17) SET £rune_name "vista"
-    IF (§random_value == 18) SET £rune_name "vitae"
-    IF (§random_value == 19) SET £rune_name "yok"
+  // "mega" rune on level 15 that is only visible in the demo version
+  IF (^ME == "rune_aam_0003") {
+    SET §EXCLUDE_ME 1
+  }
+
+  // "vista" rune on level 15 that is only visible in the demo version
+  IF (^ME == "rune_aam_0004") {
+    SET §EXCLUDE_ME 1
+  }
+
+  IF (§EXCLUDE_ME == 0) {
+    GOSUB MOD_RR_INIT
+
+    // step 3: use up all the mod_rr_rune_* variables, then subsequent runes can be completely random
+    IF (#MOD_RR_MANDATORY_RUNES_REMAINING >= 0) {
+      SET £rune_name $MOD_RR_RUNE_~#MOD_RR_MANDATORY_RUNES_REMAINING~
+      DEC #MOD_RR_MANDATORY_RUNES_REMAINING 1
+    } ELSE {
+      SET §random_value ^rnd_20
+      
+      IF (§random_value ==  0) SET £rune_name "aam"
+      IF (§random_value ==  1) SET £rune_name "cetrius"
+      IF (§random_value ==  2) SET £rune_name "comunicatum"
+      IF (§random_value ==  3) SET £rune_name "cosum"
+      IF (§random_value ==  4) SET £rune_name "folgora"
+      IF (§random_value ==  5) SET £rune_name "fridd"
+      IF (§random_value ==  6) SET £rune_name "kaom"
+      IF (§random_value ==  7) SET £rune_name "mega"
+      IF (§random_value ==  8) SET £rune_name "morte"
+      IF (§random_value ==  9) SET £rune_name "movis"
+      IF (§random_value == 10) SET £rune_name "nhi"
+      IF (§random_value == 11) SET £rune_name "rhaa"
+      IF (§random_value == 12) SET £rune_name "spacium"
+      IF (§random_value == 13) SET £rune_name "stregum"
+      IF (§random_value == 14) SET £rune_name "taar"
+      IF (§random_value == 15) SET £rune_name "tempus"
+      IF (§random_value == 16) SET £rune_name "tera"
+      IF (§random_value == 17) SET £rune_name "vista"
+      IF (§random_value == 18) SET £rune_name "vitae"
+      IF (§random_value == 19) SET £rune_name "yok"
+    }
   }
 
   // ------------------------- end of mod part 1 -------------------------
